@@ -115,29 +115,27 @@ ffmpeg -i in.mp4 -c:v libx264 -crf 23 -t 15 -vf scale=1920:-2 out.mp4
 **背景上有层白雾 / 字看不清**
 调 `−` 把暗度加上去，或者换 `关`。
 
-**视频中央有播放三角 / 暂停图标**
-Chrome 的自动播放策略。插件按下面这几条处理，正常情况下不该再出现：
+**视频中央有播放三角 / 暂停图标（Safari 尤其容易）**
 
-1. `muted` / `defaultMuted` / `playsinline` 在**设 src 之前**落定
-2. 先插入 DOM，**最后**才设 `src`
-3. `attempt()` 带重试：元数据就绪后最多试 40 次（每次间隔 220ms），
-   并把 `play()` 的 Promise **真正接住**（早期版本用空 catch 吞掉了拒绝原因，
-   所以既不知道失败原因也没有重试时机）
-4. 任何一次用户交互（点击 / 按键 / 滚轮 / 触摸）后强制恢复播放 ——
-   这是自动播放被拦时唯一 100% 有效的路径
-5. 标签页切回来时重试；被浏览器暂停后自动恢复
-6. 最后兜底：8 秒后仍没播起来 → 量到视频尺寸后取首帧做静态背景
-   （早期版本不量尺寸，取出来是一张空白图）
-7. CSS 隐藏 `::-webkit-media-controls-*`，并给 video 关掉 `pointer-events`
-8. 在视频之上叠一层**透明遮罩**（`.wall-shield`）—— Safari 对 `::-webkit-media-controls-*`
-   的隐藏不可靠，用遮罩压掉它的原生播放/暂停控件更稳
-9. 播放成功时**清掉**之前记录的失败标记 —— 否则诊断里会一直挂着一条过期的
-   `NotAllowedError`，看起来像还在报错
+Safari 会拒绝静音视频的自动播放（实测 `NotAllowedError`，而且忽略"允许全部自动播放"设置，
+属于 [WebKit 已知问题](https://wiki.webkit.org/show_bug.cgi?id=321264)）。所以插件**不依赖自动播放成功**：
 
-顺手记一个踩过的坑：`addEventListener(evt, fn, { passive: true })` 多写一个右括号时，
-Chrome 会把 `{passive:true}` 当成**第四个参数** `wantsUntrusted`，
-于是报 `Cannot read properties of undefined (reading 'touchstart')` ——
-那组兜底监听根本没挂上，自动播放被拦时就真的只能手点了。
+- 视频元素初始 `visibility: hidden`，并在加载时把**第一帧画成 poster 静帧**（`.wall-poster`）
+- 播放真的开始（`playing` 事件）时，才加 `.wall-playing` 类把视频露出来
+- 于是：**自动播放被拦 → 你看到的是静帧画面；播放成功 → 无缝变成动态**
+
+这样画面上永远不会出现播放键。想看动的，在页面上点一下（点击/按键/滚轮/触摸都算），
+插件会借这次用户交互重新尝试播放。
+
+如果点了还是不动，控制台看这两个值：
+
+```js
+window.__wallPlayState    // playing / blocked
+window.__wallPlayError    // 被拒原因
+window.__wallPoster       // ok / failed:xxx / missing
+```
+
+`__wallPoster` 不是 `ok` 说明连首帧都没取到（素材可能损坏）。
 
 **下载卡住 / 失败**
 moewalls 有限流：同一个文件 60 秒内只能下一次，短时间下太多会被封 5 分钟。等一会儿再试。
