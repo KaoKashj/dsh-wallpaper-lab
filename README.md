@@ -45,17 +45,30 @@ dsh plugin --profile web add https://github.com/KaoKashj/dsh-wallpaper-lab
 2. 点 `⤓`，进度显示在旁边
 3. 下完自动入库，下拉框里会出现 `✓`
 
-内置的几张（都是星空 / 极光题材）：
+内置十张，界面上按分类分组：
+
+**人物**
+
+| 名称 | 来源 | 大小 |
+|---|---|---|
+| 静刃武士（黑白） | moewalls | ~145 MB ⚠️ |
+| 影骑士对泰坦 | moewalls | ~16 MB |
+
+**天空 · 极光**
 
 | 名称 | 来源 | 大小 |
 |---|---|---|
 | 银河 · 极光 · 雪山 | moewalls | ~35 MB |
 | 极光星空 | moewalls | ~32 MB |
+| 湖上极光 | moewalls | ~34 MB |
+| 极光湖 · 星夜 | moewalls | ~22 MB |
 | 极光湖面 | motionbgs | ~3 MB |
-| 星空 | motionbgs | ~23 MB |
 | 星夜 | motionbgs | ~24 MB |
 | 夜空 | motionbgs | ~2 MB |
 | 星系 | motionbgs | ~19 MB |
+
+> 界面里超过 100 MB 的会标 `⚠大`。静刃武士那张实测 145 MB，
+> 下载会比较久，也不适合当循环播放的背景（体积大、解码吃资源）。
 
 想加自己的，改 `lib/download.js` 里的 `CATALOG` 就行。
 
