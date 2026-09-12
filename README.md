@@ -86,6 +86,15 @@ ffmpeg -i in.mp4 -c:v libx264 -crf 23 -t 15 -vf scale=1920:-2 out.mp4
 
 （`-t 15` 只取前 15 秒，壁纸是循环播的，不需要整段。）
 
+## 鉴权
+
+插件的所有路由都复用了宿主的鉴权：调用 `connection.requestRejection(req)`，
+和 dsh 自己保护 `/api` 用的是同一套校验（浏览器会话 cookie，由带 token 的启动地址签发）。
+
+也就是说：**没有 token 打不开 dsh 界面，也同样打不开这些接口。**
+
+拿不到 `connection` 服务时（比如脱离 dsh 单独跑）会放行并在注释里说明，避免插件在异常部署下完全不可用。
+
 ## 关于「桌面」模式
 
 `桌面` = 跟随 macOS 当前的系统壁纸。实现方式是读
