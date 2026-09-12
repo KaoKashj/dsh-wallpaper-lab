@@ -129,6 +129,10 @@ Chrome 的自动播放策略。插件按下面这几条处理，正常情况下�
 6. 最后兜底：8 秒后仍没播起来 → 量到视频尺寸后取首帧做静态背景
    （早期版本不量尺寸，取出来是一张空白图）
 7. CSS 隐藏 `::-webkit-media-controls-*`，并给 video 关掉 `pointer-events`
+8. 在视频之上叠一层**透明遮罩**（`.wall-shield`）—— Safari 对 `::-webkit-media-controls-*`
+   的隐藏不可靠，用遮罩压掉它的原生播放/暂停控件更稳
+9. 播放成功时**清掉**之前记录的失败标记 —— 否则诊断里会一直挂着一条过期的
+   `NotAllowedError`，看起来像还在报错
 
 顺手记一个踩过的坑：`addEventListener(evt, fn, { passive: true })` 多写一个右括号时，
 Chrome 会把 `{passive:true}` 当成**第四个参数** `wantsUntrusted`，
