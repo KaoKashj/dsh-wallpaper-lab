@@ -1,0 +1,4 @@
+# 壁纸实验室：纯宿主侧插件（无 dsh.client，因此不需要打包客户端 bundle）
+- insert:
+    - id: dsh-wallpaper-lab
+      name: 'dsh-wallpaper-lab'
