@@ -115,9 +115,25 @@ ffmpeg -i in.mp4 -c:v libx264 -crf 23 -t 15 -vf scale=1920:-2 out.mp4
 **背景上有层白雾 / 字看不清**
 调 `−` 把暗度加上去，或者换 `关`。
 
-**视频中央有个播放三角**
-Chrome 拦了自动播放。插件已经按 `muted` + `playsinline` 处理过，如果还出现，
-检查一下素材是不是损坏（用播放器打开看看）。
+**视频中央有播放三角 / 暂停图标**
+Chrome 的自动播放策略。插件按下面这几条处理，正常情况下不该再出现：
+
+1. `muted` / `defaultMuted` / `playsinline` 在**设 src 之前**落定
+2. 先插入 DOM，**最后**才设 `src`
+3. `attempt()` 带重试：元数据就绪后最多试 40 次（每次间隔 220ms），
+   并把 `play()` 的 Promise **真正接住**（早期版本用空 catch 吞掉了拒绝原因，
+   所以既不知道失败原因也没有重试时机）
+4. 任何一次用户交互（点击 / 按键 / 滚轮 / 触摸）后强制恢复播放 ——
+   这是自动播放被拦时唯一 100% 有效的路径
+5. 标签页切回来时重试；被浏览器暂停后自动恢复
+6. 最后兜底：8 秒后仍没播起来 → 量到视频尺寸后取首帧做静态背景
+   （早期版本不量尺寸，取出来是一张空白图）
+7. CSS 隐藏 `::-webkit-media-controls-*`，并给 video 关掉 `pointer-events`
+
+顺手记一个踩过的坑：`addEventListener(evt, fn, { passive: true })` 多写一个右括号时，
+Chrome 会把 `{passive:true}` 当成**第四个参数** `wantsUntrusted`，
+于是报 `Cannot read properties of undefined (reading 'touchstart')` ——
+那组兜底监听根本没挂上，自动播放被拦时就真的只能手点了。
 
 **下载卡住 / 失败**
 moewalls 有限流：同一个文件 60 秒内只能下一次，短时间下太多会被封 5 分钟。等一会儿再试。

@@ -1,6 +1,6 @@
 {
   "name": "dsh-wallpaper-lab",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "给 DeepSeek Harness (dsh) Web 界面换动态壁纸：视频 / 图片 / 跟随桌面，内置素材下载，控制条可收起。A live-wallpaper plugin for the dsh web GUI.",
   "type": "module",
   "main": "./lib/index.js",
