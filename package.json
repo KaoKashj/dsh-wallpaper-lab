@@ -8,6 +8,14 @@
     ".": "./lib/index.js",
     "./package.json": "./package.json"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KaoKashj/dsh-wallpaper-lab.git"
+  },
+  "homepage": "https://github.com/KaoKashj/dsh-wallpaper-lab#readme",
+  "bugs": {
+    "url": "https://github.com/KaoKashj/dsh-wallpaper-lab/issues"
+  },
   "keywords": [
     "dsh",
     "deepseek-harness",
