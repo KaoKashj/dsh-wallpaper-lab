@@ -15,22 +15,31 @@
 
 ## 下载（点一下就行）
 
-不想配代理、不想跑 `git`？直接点链接下载（GitHub 归档包，约 134 MB，含 6 个视频与 6 张首帧）：
+不想配代理、不想跑 `git`？直接点链接下载。约 134 MB，含 6 个视频与 6 张首帧。
 
-- **[⬇ 下载 v0.9.0.tar.gz](https://github.com/KaoKashj/dsh-wallpaper-lab/archive/refs/tags/v0.9.0.tar.gz)** ← 推荐，版本固定
-- [⬇ 下载 v0.9.0.zip](https://github.com/KaoKashj/dsh-wallpaper-lab/archive/refs/tags/v0.9.0.zip)
-- [⬇ 下载最新 main.tar.gz](https://github.com/KaoKashj/dsh-wallpaper-lab/archive/refs/heads/main.tar.gz)
+### 推荐：Release 附件（预打包，秒开始）
 
-> **首次下载会慢**：GitHub 要在服务端现场打包这个 134 MB 的仓库，可能等 10–30 秒才开始传输。
-> 存下来的文件名通常就是 `v0.9.0.tar.gz`（由链接末尾决定）。
+- **[⬇ 下载 dsh-wallpaper-lab-0.9.0.tgz](https://github.com/KaoKashj/dsh-wallpaper-lab/releases/download/v0.9.0/dsh-wallpaper-lab-0.9.0.tgz)**
+- [查看 Release 页面](https://github.com/KaoKashj/dsh-wallpaper-lab/releases/tag/v0.9.0)
 
-下完直接安装，**不需要 git，也不需要代理**：
+这个文件是**预先生成**的 npm 包，下载即刻开始，支持**断点续传**（HTTP Range），版本固定不会变。
+
+下完直接装，**不需要 git，也不需要代理**：
 
 ```sh
-# tar.gz 不用解压 —— pnpm 认识这种归档包，会自动剥掉外层目录
-dsh plugin --profile web add ~/Downloads/v0.9.0.tar.gz
+# .tgz 不用解压 —— pnpm 认识这种包，会自动剥掉外层目录
+dsh plugin --profile web add ~/Downloads/dsh-wallpaper-lab-0.9.0.tgz
+```
 
-# 或者：ZIP 解压后按目录安装
+### 备选：仓库归档包（服务端现场打包）
+
+- [⬇ v0.9.0.tar.gz](https://github.com/KaoKashj/dsh-wallpaper-lab/archive/refs/tags/v0.9.0.tar.gz) ／ [⬇ v0.9.0.zip](https://github.com/KaoKashj/dsh-wallpaper-lab/archive/refs/tags/v0.9.0.zip)
+- [⬇ 最新 main.tar.gz](https://github.com/KaoKashj/dsh-wallpaper-lab/archive/refs/heads/main.tar.gz)
+
+> GitHub 要在服务端**现场打包**这个 134 MB 的仓库，**首次可能等 10–30 秒才开始传输**（`curl -I` 之类的探测会一直卡到打包完成）。存下来的文件名通常是 `v0.9.0.tar.gz`（由链接末尾决定）。
+
+```sh
+# ZIP 解压后按目录装
 unzip ~/Downloads/v0.9.0.zip -d ~/Downloads
 dsh plugin --profile web add ~/Downloads/dsh-wallpaper-lab-0.9.0
 ```
@@ -38,7 +47,7 @@ dsh plugin --profile web add ~/Downloads/dsh-wallpaper-lab-0.9.0
 也可以让 dsh 自己下载再装（一条命令，同样不依赖 git）：
 
 ```sh
-dsh plugin --profile web add https://github.com/KaoKashj/dsh-wallpaper-lab/archive/refs/tags/v0.9.0.tar.gz
+dsh plugin --profile web add https://github.com/KaoKashj/dsh-wallpaper-lab/releases/download/v0.9.0/dsh-wallpaper-lab-0.9.0.tgz
 ```
 
 ## 安装
