@@ -13,9 +13,41 @@
 - 支持你自己的素材目录 `~/.dsh/theme-assets/`
 - 复用宿主鉴权，壁纸接口不会绕开 dsh 的登录校验
 
+## 下载（点一下就行）
+
+不想配代理、不想跑 `git`？直接点链接下载（GitHub 归档包，约 134 MB，含 6 个视频与 6 张首帧）：
+
+- **[⬇ 下载 v0.9.0.tar.gz](https://github.com/KaoKashj/dsh-wallpaper-lab/archive/refs/tags/v0.9.0.tar.gz)** ← 推荐，版本固定
+- [⬇ 下载 v0.9.0.zip](https://github.com/KaoKashj/dsh-wallpaper-lab/archive/refs/tags/v0.9.0.zip)
+- [⬇ 下载最新 main.tar.gz](https://github.com/KaoKashj/dsh-wallpaper-lab/archive/refs/heads/main.tar.gz)
+
+> **首次下载会慢**：GitHub 要在服务端现场打包这个 134 MB 的仓库，可能等 10–30 秒才开始传输。
+> 存下来的文件名通常就是 `v0.9.0.tar.gz`（由链接末尾决定）。
+
+下完直接安装，**不需要 git，也不需要代理**：
+
+```sh
+# tar.gz 不用解压 —— pnpm 认识这种归档包，会自动剥掉外层目录
+dsh plugin --profile web add ~/Downloads/v0.9.0.tar.gz
+
+# 或者：ZIP 解压后按目录安装
+unzip ~/Downloads/v0.9.0.zip -d ~/Downloads
+dsh plugin --profile web add ~/Downloads/dsh-wallpaper-lab-0.9.0
+```
+
+也可以让 dsh 自己下载再装（一条命令，同样不依赖 git）：
+
+```sh
+dsh plugin --profile web add https://github.com/KaoKashj/dsh-wallpaper-lab/archive/refs/tags/v0.9.0.tar.gz
+```
+
 ## 安装
 
-> 尚未发布到 npm，请从仓库安装。
+> 尚未发布到 npm。
+
+**方式一（点链接下载，推荐）**：见上面的 [下载](#下载点一下就行) —— 适合 github.com 连不上或不想配 git 的情况。
+
+**方式二（从仓库装）**：需要能访问 github.com（本机可能需要开代理）
 
 ```sh
 dsh plugin --profile web add github:KaoKashj/dsh-wallpaper-lab
