@@ -1,7 +1,7 @@
 {
   "name": "dsh-wallpaper-lab",
-  "version": "0.8.0",
-  "description": "给 DeepSeek Harness (dsh) Web 界面换动态壁纸：视频 / 图片 / 跟随桌面，内置素材下载，控制条可收起。A live-wallpaper plugin for the dsh web GUI.",
+  "version": "0.9.0",
+  "description": "给 DeepSeek Harness (dsh) Web 界面换动态壁纸：内置 1080p 素材 + 首帧静帧（默认零解码）、视频/图片/跟随桌面、控制条可收起。A live-wallpaper plugin for the dsh web GUI.",
   "type": "module",
   "main": "./lib/index.js",
   "exports": {
@@ -27,7 +27,8 @@
     "lib",
     "cordis.patch.yml",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "assets"
   ],
   "dsh": {
     "bundle": {
